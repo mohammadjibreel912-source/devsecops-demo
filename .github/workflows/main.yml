@@ -5,6 +5,7 @@ on:
     branches: [ "main", "master" ]
   pull_request:
     branches: [ "main", "master" ]
+  workflow_dispatch: # <-- هذه الإضافة تتيح التشغيل اليدوي بنقرة زر
 
 jobs:
   secret-scanning:
@@ -22,7 +23,7 @@ jobs:
           path: ./
           base: ${{ github.event.repository.default_branch }}
           head: HEAD
-        continue-on-error: true # لكي يكمل الـ pipeline ونرى النتائج
+        continue-on-error: true
 
   sast-bandit:
     name: 2. Python SAST (Bandit)

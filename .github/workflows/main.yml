@@ -9,6 +9,7 @@ jobs:
   secret-scanning:
     name: 1. Secret Scanning (TruffleHog)
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -26,6 +27,7 @@ jobs:
   sast-bandit:
     name: 2. Python SAST (Bandit)
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -33,17 +35,19 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.10'
+          python-version: "3.10"
 
       - name: Install Bandit
         run: pip install bandit
 
       - name: Run Bandit Security Scan
-        run: bandit -r . -f custom --msg-template "{abspath}:{line}: {severity}: {test_id}: {msg}" || true
+        run: |
+          bandit -r . -f custom --msg-template "{abspath}:{line}: {severity}: {test_id}: {msg}" || true
 
   sast-semgrep:
     name: 3. Advanced SAST (Semgrep)
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -57,6 +61,7 @@ jobs:
   sca-dependency-scan:
     name: 4. SCA Dependency Scan (Safety)
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -64,13 +69,16 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.10'
+          python-version: "3.10"
 
       - name: Install Dependencies & Safety
         run: |
           python -m pip install --upgrade pip
           pip install safety
-          pip install -r requirements.txt
+
+          if [ -f requirements.txt ]; then
+            pip install -r requirements.txt
+          fi
 
       - name: Scan Dependencies for CVEs
         run: safety check || true

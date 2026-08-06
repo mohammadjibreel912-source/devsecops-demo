@@ -5,6 +5,7 @@ on:
     branches: [ "main", "master" ]
   pull_request:
     branches: [ "main", "master" ]
+  workflow_dispatch: # <-- هذه الإضافة تتيح التشغيل اليدوي بنقرة زر
 
 jobs:
   secret-scanning:

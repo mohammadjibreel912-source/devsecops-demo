@@ -2,10 +2,8 @@ name: DevSecOps CI/CD Pipeline
 
 on:
   push:
-    branches: [ "main", "master" ]
   pull_request:
-    branches: [ "main", "master" ]
-  workflow_dispatch: # <-- هذه الإضافة تتيح التشغيل اليدوي بنقرة زر
+  workflow_dispatch:
 
 jobs:
   secret-scanning:
